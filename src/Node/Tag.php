@@ -2,10 +2,10 @@
 
 namespace AhjDev\PhpTagMaker\Node;
 
-use Stringable;
+use AhjDev\PhpTagMaker\Node;
 use DOMDocument;
 use DOMNode;
-use AhjDev\PhpTagMaker\Node;
+use Stringable;
 
 final class Tag extends Node
 {
@@ -39,15 +39,16 @@ final class Tag extends Node
         $element = $domDocument->createElement($this->tag);
         // Add values
         foreach ($this->value as $value) {
-            if (is_string($value) || $value instanceof Stringable) {
+            if (\is_string($value) || $value instanceof Stringable) {
                 $value = new Text($value);
             }
             $value = $value->toDomNode($domDocument);
             $element->appendChild($value);
         }
         // Set attributes
-        foreach ($this->attributes as $name => $value)
+        foreach ($this->attributes as $name => $value) {
             $element->setAttribute($name, $value);
+        }
         // Return DomElement
         return $element;
     }

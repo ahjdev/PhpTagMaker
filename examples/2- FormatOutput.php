@@ -22,3 +22,4 @@ $output = $maker->run(
         new EscapedText('<a> with escape'),
     ),
 );
+print($output);

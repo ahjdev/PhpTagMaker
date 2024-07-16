@@ -10,7 +10,7 @@ final class TagMaker
 
     public function __construct()
     {
-        \assert(\extension_loaded('dom'), 'Extebsion Dom not found');
+        \assert(\extension_loaded('dom'), 'Extension Dom not found');
         $this->dom = new DOMDocument();
     }
 

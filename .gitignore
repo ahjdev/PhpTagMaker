@@ -1,0 +1,52 @@
+# JetBrains IDE
+.idea/
+*.iml
+
+# Eclipse
+.buildpath
+.project
+.settings
+
+# VI
+*.swp
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Sphinx documentation
+docs/_build/
+
+# emacs auto-saving files
+\#*#
+.#*#
+
+# composer
+vendor
+composer.lock
+*.phar
+phar7
+phar5
+.phpunit.result.cache
+
+# Vscode
+.vscode/*
+.vscode
+.php_cs.cache
+.phpdoc_cache
+*bak
+.env
+
+app_test.json
+app.json
+config.json
+/Dockerfile
+/docker-compose.yml
+/Caddyfile
+/changelog
+
+# Project

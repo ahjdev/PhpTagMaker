@@ -6,12 +6,11 @@ use DOMDocument;
 
 final class TagMaker
 {
-    private DOMDocument $dom;
+    private bool $formatOutput = false;
 
     public function __construct()
     {
         \assert(\extension_loaded('dom'), 'Extension Dom not found');
-        $this->dom = new DOMDocument();
     }
 
     /**
@@ -19,15 +18,21 @@ final class TagMaker
      */
     public function formatOutput(bool $option): self
     {
-        $this->dom->formatOutput = $option;
+        $this->formatOutput = $option;
         return $this;
     }
 
     public function run(Node $node): string
     {
-        $node = $node->toDomNode($this->dom);
-        $this->dom->appendChild($node);
-        return $this->dom->saveHTML();
+        $dom  = new DOMDocument();
+        $dom->formatOutput = $this->formatOutput;
+        $dom->appendChild(
+            $dom->importNode(
+                $node->toDomNode(),
+                true
+            )
+        );
+        return $dom->saveHTML();
     }
 
     public static function build(Node $node): string

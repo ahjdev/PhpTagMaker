@@ -2,16 +2,16 @@
 
 namespace AhjDev\PhpTagMaker\Node;
 
-use DOMCdataSection;
+use DOMText;
 use AhjDev\PhpTagMaker\Node;
 
-final class EscapedText extends Node
+final class HtmlText extends Node
 {
-    private DOMCdataSection $text;
+    private DOMText $domText;
 
     public function __construct(string $text)
     {
-        $this->text = new DOMCdataSection($text);
+        $this->domText = new DOMText($text);
     }
 
     public static function make($text)
@@ -19,8 +19,8 @@ final class EscapedText extends Node
         return new static($text);
     }
 
-    public function toDomNode(): DOMCdataSection
+    public function toDomNode(): DOMText
     {
-        return $this->text;
+        return $this->domText;
     }
 }

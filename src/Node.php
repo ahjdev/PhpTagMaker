@@ -4,5 +4,5 @@ namespace AhjDev\PhpTagMaker;
 
 abstract class Node
 {
-    abstract public function toDomNode(\DOMDocument $domDocument): \DomNode;
+    abstract public function toDomNode(): \DomNode;
 }

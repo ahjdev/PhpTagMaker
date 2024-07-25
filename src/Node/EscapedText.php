@@ -14,9 +14,9 @@ final class EscapedText extends Node
         $this->text = new DOMCdataSection($text);
     }
 
-    public static function make($text)
+    public static function make($text): self
     {
-        return new static($text);
+        return new self($text);
     }
 
     public function toDomNode(): DOMCdataSection

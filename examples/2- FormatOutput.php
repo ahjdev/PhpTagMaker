@@ -1,6 +1,6 @@
 <?php
 
-include 'vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use AhjDev\PhpTagMaker\TagMaker;
 use AhjDev\PhpTagMaker\Node\HtmlTag;
@@ -9,25 +9,27 @@ use AhjDev\PhpTagMaker\Node\EscapedText;
 use AhjDev\PhpTagMaker\Node\HtmlTagMulti;
 
 $maker = new TagMaker();
-$output = $maker->formatOutput(true)->run(
-    HtmlTag::span(
-        HtmlTag::a(
-            'github.com/ahjdev',
-            'My Github',
-        ),
-        'Can also use a string',
-        HtmlTag::ul(
-            HtmlTag::li('one'),
-            HtmlTag::li('two'),
-            HtmlTag::li('three')->setClass('Class 1', 'Class 2'),
-        ),
-        HtmlText::make('<a> without escape'),
-        HtmlTag::br(),
-        EscapedText::make('<a> with escape'),
-        HtmlTag::br(),
-        HtmlTagMulti::make('Multi tag', ['a', 'b', 'code']),
-    )
-);
+$output = $maker
+    ->formatOutput()
+    ->run(
+        HtmlTag::span(
+            HtmlTag::a(
+                'github.com/ahjdev',
+                'My Github',
+            ),
+            'Can also use a string',
+            HtmlTag::ul(
+                HtmlTag::li('one'),
+                HtmlTag::li('two'),
+                HtmlTag::li('three')->setClass('Class 1', 'Class 2'),
+            ),
+            HtmlText::make('<a> without escape'),
+            HtmlTag::br(),
+            EscapedText::make('<a> with escape'),
+            HtmlTag::br(),
+            HtmlTagMulti::make('Multi tag', ['a', 'b', 'code']),
+        )
+    );
 print($output);
 
 $myTag = HtmlTag::make('myTag', 'myValue');
@@ -53,7 +55,7 @@ $myTag->setClass('blah');
 $myTag->setName('h1');
 
 // Iterate attributes
-foreach ($myTag->getAttributes() as $attr) {
+foreach ($myTag->iterAttributes() as $attr) {
     // $attr is instanceof DOMAttr
     // var_dump($attr);
 }

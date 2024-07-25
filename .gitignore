@@ -35,7 +35,8 @@ phar5
 
 # Vscode
 .vscode/*
-.vscode
+!.vscode/settings.json
+!.vscode/extensions.json
 .php_cs.cache
 .phpdoc_cache
 *bak

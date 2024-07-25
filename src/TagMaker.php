@@ -16,7 +16,7 @@ final class TagMaker
     /**
      * Nicely formats output with indentation and extra space.
      */
-    public function formatOutput(bool $option): self
+    public function formatOutput(bool $option = true): self
     {
         $this->formatOutput = $option;
         return $this;
@@ -35,8 +35,8 @@ final class TagMaker
         return $dom->saveHTML();
     }
 
-    public static function build(Node $node): string
+    public static function build(Node $node, bool $format = false): string
     {
-        return (new self)->run($node);
+        return (new self)->formatOutput($format)->run($node);
     }
 }

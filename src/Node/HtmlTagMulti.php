@@ -14,12 +14,12 @@ final class HtmlTagMulti extends Node implements IteratorAggregate
     {
     }
 
-    public static function make(string $text, array $tags)
+    public static function make(string $text, array $tags): self
     {
-        return new static($text, $tags);
+        return new self($text, $tags);
     }
 
-    public function getIterator(): \Traversable
+    public function getIterator(): \Generator
     {
         return yield from $this->tags;
     }

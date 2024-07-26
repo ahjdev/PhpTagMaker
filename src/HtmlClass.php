@@ -7,8 +7,11 @@ use IteratorAggregate;
 
 final class HtmlClass implements Stringable, IteratorAggregate
 {
-    public function __construct(private array $classList = [])
+    private array $classList = [];
+
+    public function __construct(string ...$classes)
     {
+        $this->classList = array_map(static fn ($e) => trim($e), $classes);
     }
 
     public function __toString(): string
@@ -18,11 +21,12 @@ final class HtmlClass implements Stringable, IteratorAggregate
 
     public function has(string $class): bool
     {
-        return in_array($class, $this->classList, true);
+        return in_array(trim($class), $this->classList, true);
     }
 
     public function add(string $class): self
     {
+        $class = trim($class);
         if (!(empty($class) || $this->has($class))) {
             $this->classList[] = $class;
         }
@@ -31,7 +35,7 @@ final class HtmlClass implements Stringable, IteratorAggregate
 
     public function remove(string $class): self
     {
-        if (($pos = array_search($class, $this->classList, true)) !== false) {
+        if (($pos = array_search(trim($class), $this->classList, true)) !== false) {
             unset($this->classList[$pos]);
         }
         return $this;
@@ -45,8 +49,12 @@ final class HtmlClass implements Stringable, IteratorAggregate
                 array_shift($classes);
             }
         }
+        // leftover strings
         if ($classes) {
-            $this->classList = array_merge($this->classList, $classes);
+            $this->classList = array_merge(
+                $this->classList,
+                array_map(static fn ($e) => trim($e), $classes)
+            );
         }
         $this->classList = array_filter($this->classList);
         return $this;

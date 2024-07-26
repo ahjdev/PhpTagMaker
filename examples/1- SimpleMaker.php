@@ -11,7 +11,7 @@ $output = TagMaker::build(
         'my-class-name',
         HtmlTag::pre('A Pre Tag'),
         HtmlTag::div(
-            new HtmlClass(['class-1', 'class-2'])
+            new HtmlClass('class-1', 'class-2')
         )
     )
 );

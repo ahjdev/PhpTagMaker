@@ -16,7 +16,7 @@ trait Attributes
 {
     public function setClass(string ...$classes): self
     {
-        return $this->setAttribute('class', (string)(new HtmlClass($classes)));
+        return $this->setAttribute('class', (string)(new HtmlClass(...$classes)));
     }
 
     public function getClass(): null|string|array

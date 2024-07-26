@@ -14,9 +14,9 @@ final class HtmlText extends Node
         $this->domText = new DOMText($text);
     }
 
-    public static function make($text)
+    public static function make($text): self
     {
-        return new static($text);
+        return new self($text);
     }
 
     public function toDomNode(): DOMText

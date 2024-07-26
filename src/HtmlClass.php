@@ -7,36 +7,66 @@ use IteratorAggregate;
 
 final class HtmlClass implements Stringable, IteratorAggregate
 {
-    public function __construct(private array $class)
+    private array $classList = [];
+
+    public function __construct(string ...$classes)
     {
+        $this->classList = array_map(static fn ($e) => trim($e), $classes);
     }
 
-    public function __tostring()
+    public function __toString(): string
     {
-        return implode(' ', $this->class);
+        return implode(' ', $this->classList);
     }
 
-    public function hasClass(string $class)
+    public function has(string $class): bool
     {
-        return in_array($class, $this->class);
+        return in_array(trim($class), $this->classList, true);
     }
 
-    public function addClass(string $class)
+    public function add(string $class): self
     {
-        if (!$this->hasClass($class))
-            $this->class[] = $class;
+        $class = trim($class);
+        if (!(empty($class) || $this->has($class))) {
+            $this->classList[] = $class;
+        }
         return $this;
     }
 
-    public function removeClass(string $class)
+    public function remove(string $class): self
     {
-        if (($s = array_search($class, $this->class)) !== false)
-            unset($this->class[$s]);
+        if (($pos = array_search(trim($class), $this->classList, true)) !== false) {
+            unset($this->classList[$pos]);
+        }
         return $this;
+    }
+
+    public function merge(string|self ...$classes): self
+    {
+        foreach ($classes as $class) {
+            if ($class instanceof self) {
+                $this->classList = array_merge($this->classList, $class->asArray());
+                array_shift($classes);
+            }
+        }
+        // leftover strings
+        if ($classes) {
+            $this->classList = array_merge(
+                $this->classList,
+                array_map(static fn ($e) => trim($e), $classes)
+            );
+        }
+        $this->classList = array_filter($this->classList);
+        return $this;
+    }
+
+    public function asArray(): array
+    {
+        return $this->classList;
     }
 
     public function getIterator(): \Generator
     {
-        return yield from $this->class;
+        return yield from $this->classList;
     }
 }

@@ -27,8 +27,9 @@ trait DefaultTags
     public static function div(HtmlClass|string $class = null, Node|string ...$value): self
     {
         $tag = HtmlTag::make('div', ...$value);
-        if ($class)
-            $tag->setAttribute('class', (string) $class);
+        if ($class) {
+            $tag->class->merge($class);
+        }
         return $tag;
     }
 
@@ -179,7 +180,7 @@ trait DefaultTags
     }
 
     /**
-     * Specifies column properties for each column within a <colgroup> element 
+     * Specifies column properties for each column within a <colgroup> element
      */
     public static function col(): self
     {
@@ -267,7 +268,7 @@ trait DefaultTags
     }
 
     /**
-     * Defines emphasized text 
+     * Defines emphasized text
      */
     public static function em(Node|string ...$value): self
     {
@@ -703,9 +704,11 @@ trait DefaultTags
     /**
      * Defines multiple media resources for media elements (<video> and <audio>)
      */
-    public static function source(): self
+    public static function source(string $src, string $type): self
     {
-        return HtmlTag::make('source');
+        return HtmlTag::make('source')
+            ->setAttribute('src', $src)
+            ->setAttribute('type', $type);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-include 'vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use AhjDev\PhpTagMaker\TagMaker;
 use AhjDev\PhpTagMaker\HtmlClass;
@@ -8,10 +8,10 @@ use AhjDev\PhpTagMaker\Node\HtmlTag;
 
 $output = TagMaker::build(
     HtmlTag::div(
-        'My Class Name',
+        'my-class-name',
         HtmlTag::pre('A Pre Tag'),
         HtmlTag::div(
-            new HtmlClass(['Class 1', 'Class 2'])
+            new HtmlClass('class-1', 'class-2')
         )
     )
 );

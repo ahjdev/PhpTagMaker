@@ -11,9 +11,12 @@ final class HtmlTag extends Node
     use Internal\Attributes;
     use Internal\DefaultTags;
 
+    /** @var list<Node> */
     private array $values = [];
+
+    private HtmlClass $class;
+
     private DOMElement $domElement;
-    public readonly HtmlClass $class;
 
     public function __construct(private string $tag, Node|string ...$value)
     {

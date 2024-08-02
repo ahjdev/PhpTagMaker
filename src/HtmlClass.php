@@ -2,10 +2,11 @@
 
 namespace AhjDev\PhpTagMaker;
 
+use Countable;
 use Stringable;
 use IteratorAggregate;
 
-final class HtmlClass implements Stringable, IteratorAggregate
+final class HtmlClass implements Stringable, IteratorAggregate, Countable
 {
     private array $classList = [];
 
@@ -63,6 +64,11 @@ final class HtmlClass implements Stringable, IteratorAggregate
     public function asArray(): array
     {
         return $this->classList;
+    }
+
+    public function count(): int
+    {
+        return count($this->classList);
     }
 
     public function getIterator(): \Generator

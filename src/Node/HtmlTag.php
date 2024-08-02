@@ -57,11 +57,11 @@ final class HtmlTag extends Node
     public function toDomNode(): DOMElement
     {
         $element = $this->domElement->cloneNode(true);
-        $element->setAttribute('class', (string)$this->class);
+        if ($this->class->count()) {
+            $element->setAttribute('class', (string) $this->class);
+        }
         array_map(
-            static fn (Node $v) => $element->append(
-                $v->toDomNode()
-            ),
+            static fn (Node $v) => $element->append($v->toDomNode()),
             $this->values
         );
         return $element;

@@ -27,7 +27,14 @@ $output = $maker
             HtmlTag::br(),
             EscapedText::make('<a> with escape'),
             HtmlTag::br(),
-            HtmlTagMulti::make('Multi tag', ['a', 'b', 'code']),
+            HtmlTagMulti::make(['a', 'b', 'code'], 'Multi tag'),
+            HtmlTag::br(),
+            HtmlTagMulti::make(
+                ['c', 'r', 'y'],
+                HtmlTag::b('inside tag'),
+                ' ',
+                'Just text'
+            )
         )
     );
 print($output);

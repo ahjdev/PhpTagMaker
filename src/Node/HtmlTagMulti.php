@@ -10,13 +10,17 @@ use AhjDev\PhpTagMaker\Node;
  */
 final class HtmlTagMulti extends Node implements IteratorAggregate
 {
-    public function __construct(private string $text, private array $tags)
+    /** @var list<Node> */
+    private array $values = [];
+
+    public function __construct(private array $tags, Node|string ...$value)
     {
+        $this->values = array_map(static fn ($v) => is_string($v) ? new HtmlText($v) : $v, $value);
     }
 
-    public static function make(string $text, array $tags): self
+    public static function make(array $tags, Node|string ...$value): self
     {
-        return new self($text, $tags);
+        return new self($tags, ...$value);
     }
 
     public function getIterator(): \Generator
@@ -26,10 +30,10 @@ final class HtmlTagMulti extends Node implements IteratorAggregate
 
     public function toDomNode(): \DomNode
     {
-        $before = $this->text;
+        $before = $this->values;
         foreach (array_reverse($this->tags) as $tag) {
-            $tag    = new HtmlTag($tag, $before);
-            $before = $tag;
+            $tag    = new HtmlTag($tag, ...$before);
+            $before = [$tag];
             // foreach ($attributes as $name => $value)
             //     $tag->setAttribute($name, $value);
         }

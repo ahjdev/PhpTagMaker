@@ -37,9 +37,13 @@ phar5
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
-.php_cs.cache
+
+# Cache
+.php-cs-fixer.cache
 .phpdoc_cache
 *bak
+
+# ENV
 .env
 
 app_test.json
